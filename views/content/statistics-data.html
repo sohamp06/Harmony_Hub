@@ -1,0 +1,127 @@
+<!--
+Name: Soham Patel
+Date: March 28, 2024
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <title>Statistics</title>
+    <!-- Including Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Defining CSS styles -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<!-- Header section -->
+<header>
+    <b>Statistics</b>
+</header>
+<body>
+<!-- Main content section -->
+<h2>Showing WebSite visitor of 2024.</h2>
+<!-- Canvas element for the chart -->
+<canvas id="myChart" width="750" height="350"></canvas>
+
+<a href="../../index.html" class="back-link">Back to Homepage</a>
+
+
+<!-- JavaScript code for Chart.js -->
+<script>
+    // Run when the DOM content is loaded !!
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check if the user is authenticated or not
+        const authenticated = sessionStorage.getItem('authenticated');
+        if (authenticated) {
+            // User is authenticated, displaying statistics content
+            displayStatistics();
+        } else {
+            // User is not authenticated, redirect to login page !!
+            window.location.href = 'login.html';
+        }
+    });
+
+    // Function to display statistics
+    function displayStatistics() {
+
+        const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const data = [65, 59, 80, 81, 56, 55, 40, 70, 85, 90, 75, 60];
+
+
+        const lighterColors = [
+            'rgba(255, 153, 153)',   // Lighter Red
+            'rgba(123, 192, 255)',   // Lighter Blue
+            'rgba(255, 229, 153)',   // Lighter Yellow
+            'rgba(153, 204, 204)',   // Lighter Green
+            'rgba(204, 153, 255)',   // Lighter Purple
+            'rgba(255, 204, 153)',   // Lighter Orange
+            'rgba(255, 153, 255)',   // Lighter Magenta
+            'rgba(153, 255, 255)',   // Lighter Cyan
+            'rgba(255, 204, 204)',   // Lighter Crimson
+            'rgba(153, 210, 153)',   // Lighter Green (Dark)
+            'rgba(255, 204, 229)',   // Lighter Pink
+            'rgba(153, 153, 255)'    // Lighter Navy
+        ];
+
+        // Creating a bar chart using Chart.js
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Traffic',
+                    data: data,
+                    backgroundColor: lighterColors,
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 0, 255, 1)',
+                        'rgba(0, 255, 255, 1)',
+                        'rgba(220, 20, 60, 1)',
+                        'rgba(0, 128, 0, 1)',
+                        'rgba(255, 192, 203, 1)',
+                        'rgba(0, 0, 128, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

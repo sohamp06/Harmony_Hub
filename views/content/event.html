@@ -1,0 +1,271 @@
+<!--
+Name: Soham Patel
+Date: March 28, 2024
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .events-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .event {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #pagination {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pagination-link {
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        #loadMoreBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #loadMoreBtn:hover {
+            background-color: #0056b3;
+        }
+
+        #pageNumber {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        .back-link {
+            margin: 20px auto;
+            padding: 10px;
+            font-size: small;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            text-align: center;
+        }
+
+        #searchForm {
+            display: flex;
+            align-items: center;
+        }
+
+        #searchInput {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .svgimg {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            margin-top: 5px;
+            padding: 2px 5px 0 5px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <b>Events</b>
+</header>
+<!-- Adding it inside header/navigation bar -->
+<form id="searchForm">
+    <svg class="svgimg" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30">
+        <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+
+<main class="searchable-content">
+    <section id="events" class="events-section">
+        <!-- Events will be added here -->
+    </section>
+    <div id="pagination"></div>
+    <button id="loadMoreBtn" onclick="loadMoreEvents()">Load More</button>
+</main>
+
+<a href="add-events.html" class="back-link">Add Event</a>
+
+<script>
+    let totalEvents = [];
+    let eventsPerPage = 3;
+    let currentPage = 1;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetching event data when the page loads
+        fetchEventData();
+    });
+
+    function fetchEventData() {
+        // Replacing 'events.json' with the actual path to our JSON file or API endpoint
+        fetch('../../data/events.json')
+            .then(response => response.json())
+            .then(data => {
+                totalEvents = data;
+                displayEvents();
+            })
+            .catch(error => console.error('Error fetching event data:', error));
+    }
+
+    function displayEvents() {
+        const eventsSection = document.getElementById('events');
+        const paginationSection = document.getElementById('pagination');
+
+        // Clear existing content
+        eventsSection.innerHTML = '';
+        paginationSection.innerHTML = '';
+
+        // Calculating start and end index for the current page
+        const startIndex = (currentPage - 1) * eventsPerPage;
+        const endIndex = Math.min(startIndex + eventsPerPage, totalEvents.length);
+
+        // Displaying events for the current page
+        for (let i = startIndex; i < endIndex; i++) {
+            const event = totalEvents[i];
+
+            const eventContainer = document.createElement('div');
+            eventContainer.classList.add('event', 'searchable-content');
+
+            const title = document.createElement('h2');
+            title.textContent = event.title;
+
+            const date = document.createElement('p');
+            date.textContent = `Date: ${event.date}`;
+
+            const location = document.createElement('p');
+            location.textContent = `Location: ${event.location}`;
+
+            const description = document.createElement('p');
+            description.textContent = event.description;
+
+            // Append child elements to event container
+            eventContainer.appendChild(title);
+            eventContainer.appendChild(date);
+            eventContainer.appendChild(location);
+            eventContainer.appendChild(description);
+
+            // Append event container to events section
+            eventsSection.appendChild(eventContainer);
+        }
+
+        // Showing or Hiding the "Load More" button
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        loadMoreBtn.style.display = endIndex < totalEvents.length ? 'block' : 'none';
+
+        // Displaying page number and backlink
+        const totalPages = Math.ceil(totalEvents.length / eventsPerPage);
+        if (totalPages > 1) {
+            const pagination = Array.from({ length: totalPages }, (_, index) => index + 1);
+            paginationSection.innerHTML = pagination.map(page => `<span class="pagination-link" onclick="changePage(${page})">${page}</span>`).join(' ');
+
+            // Adding backlink to homepage
+            if (currentPage === totalPages) {
+                paginationSection.innerHTML += ' | <a href="../../index.html" class="back-link">Back to Homepage</a>';
+            }
+        }
+    }
+
+
+    function loadMoreEvents() {
+        currentPage++;
+        displayEvents();
+    }
+
+    function changePage(page) {
+        currentPage = page;
+        displayEvents();
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+
+        searchForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const searchTerm = searchInput.value.toLowerCase();
+
+            performSearch(searchTerm);
+        });
+
+        function performSearch(searchTerm) {
+
+            const allContent = document.querySelectorAll('.searchable-content');
+            allContent.forEach(content => {
+                const contentText = content.textContent.toLowerCase();
+                if (contentText.includes(searchTerm)) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+
+</html>

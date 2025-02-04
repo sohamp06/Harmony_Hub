@@ -1,0 +1,165 @@
+<!--
+Name: Soham Patel
+Date: March 28, 2024
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../content/css/style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .container {
+            margin: 20px;
+            padding: 5% 30%;
+        }
+
+        .login-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 auto 0 40%; /* This will center the container horizontally */
+            text-align: center;
+        }
+
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .success-message {
+            display: none;
+            font-size: 18px;
+            color: green;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            display: none;
+            font-size: 18px;
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+    <title>Login</title>
+</head>
+<body>
+<header>
+    <b>Login</b>
+</header>
+
+<main class="container">
+    <section id="logins" class="login-section">
+        <div class="login-details" id="loginsForm">
+            <form id="loginForm" onsubmit="return handleLogin()">
+                <label for="loginUsername">Username:</label>
+                <input type="text" id="loginUsername" class="login-input" placeholder="Enter username" required>
+                <br>
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" class="login-input" placeholder="Enter password" required>
+                <br>
+                <input type="submit" value="Login" class="login-button">
+            </form>
+
+            <!-- Displaying login success message -->
+
+            <p id="loginSuccessMessage" class="success-message"></p>
+            <p id="loginErrorMessage" class="error-message"></p>
+        </div>
+
+    </section>
+</main>
+<a href="../../index.html" class="back-link">Back to Homepage</a>
+
+<script>
+    let registeredUsers = [
+        { username: 'admin', password: 'admin' },
+        // Adding other registered users here
+    ];
+    function handleLogin() {
+        let username = document.getElementById('loginUsername').value;
+        let password = document.getElementById('loginPassword').value;
+
+        if (isUserAuthenticated(username, password)) {
+            sessionStorage.setItem('authenticated', 'true');
+            window.location.href = 'statistics-data.html'; // Redirect to the statistics page
+        } else {
+            showErrorMessage('Invalid username or password. Please try again.', 'loginErrorMessage');
+        }
+
+        return false;
+    }
+
+
+    function isUserAuthenticated(username, password) {
+        return registeredUsers.some(user => user.username === username && user.password === password);
+    }
+
+    function showSuccessMessage(message, targetId) {
+        let successMessage = document.getElementById(targetId);
+        let loginForm = document.getElementById('loginForm');
+
+        // Hiding the login form
+        loginForm.style.display = 'none';
+
+        // Showing the success message
+        successMessage.textContent = message;
+        successMessage.style.display = 'block';
+    }
+
+    function showErrorMessage(message, targetId) {
+        let errorMessage = document.getElementById(targetId);
+
+        // Showing the error message
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

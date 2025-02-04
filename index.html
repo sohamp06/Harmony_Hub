@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Soham Patel">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <style>
+        .navbar-nav svg {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            fill: currentColor;
+        }
+        .navbar-nav a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+        }
+        footer {
+            background-color: #f8f9fa;
+            margin: auto;
+            text-align: center;
+            justify-content: center;
+            padding-bottom: 12px;
+        }
+        footer a {
+            color: #777;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: blue;
+        }
+        .login-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+        .registration-button {
+            background-color: #007BFF;
+            color: white;
+            margin-left: 10px;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .registration-button:hover {
+            background-color: #0056b3;
+            text-decoration: auto;
+        }
+        .container {
+            margin: 0 auto;
+            width: 80%;
+            text-align: center;
+        }
+        .uv-index {
+            font-size: 16px;
+            color: #fff;
+            background-color: #ff9800;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-left: auto;
+        }
+        p{
+            padding: 1%;
+            padding-bottom: 2%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="content/css/style.css">
+</head>
+<body>
+<!-- header Section -->
+<div id="header-placeholder"></div>
+
+
+
+<main class="container">
+    <h1 class="mb-5"> Welcome to our Site</h1>
+    <p>Empowering Your Digital Presence</p>
+    
+    <!-- Dynamically show login and register buttons -->
+    <a href="views/content/login.html" class="login-button">Login</a>
+    <a href="views/content/register.html" class="registration-button">Register</a>
+</main>
+
+<script>
+    var myHeaders = new Headers();
+    myHeaders.append("x-access-token", "openuv-3snsfrlt0lhcbh-io");
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch("https://api.openuv.io/api/v1/uv?lat=51.5&lng=-0.11&alt=100&dt=", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            var uvIndex = result.result.uv;
+            document.getElementById('uv-index').innerText = `UV Index: ${uvIndex}`;
+        })
+        .catch(error => console.log('error', error));
+</script>
+
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="scripts/main.js"></script>
+<script src="scripts/router.js"></script>
+<script>
+    fetch('views/components/header.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+        })
+        .catch(error => console.error('Error loading header:', error));
+</script>
+<script>
+    // Fetching and including the footer content
+fetch('views/components/footer.html')
+    .then(response => response.text())
+    .then(html => {
+        document.body.innerHTML += html;
+    });</script>
+
+</body>
+</html>

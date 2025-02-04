@@ -1,0 +1,133 @@
+<!--
+Name: Soham Patel
+Date: March 28, 2024
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .project-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .project-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        #loadMoreBtn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-link {
+            margin: 20px auto;
+            padding: 10px;
+            font-size: small;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            text-align: center;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 31px;
+            text-align: center;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <b>Our Portfolio</b>
+</header>
+<main class="container" id="projectContainer"></main>
+<a href="../../index.html" class="back-link">Back to Homepage</a>
+<button id="loadMoreBtn" onclick="loadMoreProjects()">Load More</button>
+<script>
+
+    const projects = [
+        { title: "What Is Commercial Photography?", description: "Commercial photography refers to photographic imagery that is used to promote and sell a product, service or idea. Whether the photography is being commissioned by a small business or a large global corporation, commercial imagery is ultimately created with the intent of making the end user of the imagery more money; a return on investment for the usage of the photographs. Using photographs for marketing and advertising purposes is considered to be “Commercial Usage.”", image: "../../content/images/123.jpg" },
+        { title: "Johann Husser describes a hypothetical and dystopian future", description: "Published on February 19, 2020\n" +
+                "\n" +
+                "Johann Husser is a photographer born in Kemerovo, Russia, currently living and working in Cologne, Germany.\n" +
+                "\n" +
+                "Initially studying Spatial Planning, he switched to photography and received his BA in Photography from the University of Applied Sciences and Arts Dortmund in late 2017. He is currently pursuing a Post-Graduate Diploma at the Academy of Media Arts Cologne and is a scholarship holder of the Studienstiftung des Deutschen Volkes.\n" +
+                "\n" +
+                "Through his work, he has a clear intent that pushes him. He deals with the psycho-geographical impact of the built surroundings we live in, focusing on and the associative memory explored with the photographic language.", image: "../../content/images/abc.jpg" },
+    ];
+
+    const projectContainer = document.getElementById("projectContainer");
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+    let projectsPerPage = 2, currentProjects = 0;
+
+    function createProjectCard(project) {
+        const card = document.createElement("div");
+        card.classList.add("project-card");
+
+        // creating element for image source
+        const image = document.createElement("img");
+        image.src = project.image;
+        image.alt = project.title;
+        image.classList.add("project-image");
+
+        const title = document.createElement("h3");
+        title.textContent = project.title;
+
+        // description
+        const description = document.createElement("p");
+        description.textContent = project.description;
+
+        card.appendChild(image);
+        card.appendChild(title);
+        card.appendChild(description);
+
+        return card;
+    }
+
+    function loadProjects() {
+        for (let i = currentProjects; i < currentProjects + projectsPerPage && i < projects.length; i++) {
+            const project = projects[i];
+            const projectCard = createProjectCard(project);
+            projectContainer.appendChild(projectCard);
+        }
+        currentProjects += projectsPerPage;
+
+        if (currentProjects >= projects.length) {
+            loadMoreBtn.style.display = "none";
+        }
+    }
+
+    function loadMoreProjects() {
+        loadProjects();
+    }
+
+    loadProjects();
+</script>
+
+</body>
+</html>

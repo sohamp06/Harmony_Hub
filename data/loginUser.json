@@ -1,0 +1,11 @@
+{
+  "users":
+  [
+    {
+      "DisplayName": "admin",
+      "EmailAddress": "admin@gmail.com",
+      "UserName": "admin",
+      "Password": "admin"
+    }
+  ]
+}

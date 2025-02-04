@@ -1,0 +1,151 @@
+/*
+Name: Soham Patel
+Date: March 28, 2024
+*/
+
+
+html, body {
+    font-family:Helvetica, Arial, Georgia, Tahoma and Roboto;
+    height: 100%;
+    margin: 0;
+    padding: 0%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Pushes footer down */
+    padding-top: 60px; /* Adjust based on navbar height */
+}
+
+footer {
+    background-color: #e4e4e4;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+}
+
+footer p {
+    margin: 0; /* Remove default margin */
+    padding: 5px 0;
+}
+
+footer a {
+    color: #777;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: blue;
+}
+
+
+
+h1 {
+    color: #2c3e50;
+}
+/* Fixed Navbar at the Top */
+.navbar {
+  
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top */
+
+}
+
+/* Adjust content so it's not hidden behind navbar */
+main {
+    flex: 1;
+    padding-top: 60px; /* Adjust for navbar height */
+}
+
+/* Navbar items styling */
+.navbar-nav {
+    margin: 0;
+    padding: 1%;;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #e4e4e4;
+}
+
+/* Adjust navbar links spacing */
+.navbar-nav a {
+    margin-right: 40px;
+}
+
+
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+
+.home-section {
+    position: relative;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.text-container {
+    text-align: center;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(darkgrey);
+    padding-top: 40px;
+    padding-bottom: 50px;
+}
+
+.text-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.welcomeDetails {
+    margin: 0.87em;
+    font-size: 0.87em;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+
+.portfolio-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.project-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+.back-link {
+    margin: 20px auto;
+    padding: 10px;
+    font-size: small;
+    text-decoration: none;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: fit-content;
+    text-align: center;
+}
